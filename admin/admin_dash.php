@@ -47,7 +47,7 @@
 
         <!-- Dashboard Options -->
         <div class="dashboard-options">
-            <a href="#" class="option-card create-post">
+            <a href="add_post.php" class="option-card create-post">
                 <div class="option-icon">
                     <i class="fas fa-plus-circle"></i>
                 </div>
@@ -65,7 +65,8 @@
                 <span class="option-link">Edit Items →</span>
             </a>
 
-            <a href="#" class="option-card see-posts">
+            <a href="view_products.php" class="option-card see-posts">
+
                 <div class="option-icon">
                     <i class="fas fa-boxes"></i>
                 </div>

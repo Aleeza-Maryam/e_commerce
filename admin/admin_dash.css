@@ -1,5 +1,5 @@
 /* admindash.css */
-/* E-commerce Professional Color Palette */
+/* Dark Green, Green, and Beige White Color Palette */
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #f8f9fa;
+    background-color: #f5f5f0; /* Beige white background */
     color: #333;
     min-height: 100vh;
     display: flex;
@@ -17,7 +17,7 @@ body {
 
 /* Navigation */
 .navbar {
-    background: linear-gradient(135deg, #2c3e50 0%, #4a6583 100%);
+    background: linear-gradient(135deg, #1a472a 0%, #2e7d32 100%); /* Dark green to green gradient */
     padding: 0.8rem 2rem;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -42,7 +42,7 @@ body {
 .nav-brand {
     font-size: 1.6rem;
     font-weight: 700;
-    color: white;
+    color: #f5f5f0; /* Beige white text */
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@ body {
 }
 
 .nav-brand i {
-    color: #3498db;
+    color: #a5d6a7; /* Light green icon */
     font-size: 1.8rem;
 }
 
@@ -64,17 +64,17 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: #f5f5f0; /* Beige white text */
 }
 
 .admin-info i {
-    color: #3498db;
+    color: #a5d6a7; /* Light green icon */
     font-size: 1.3rem;
 }
 
 .admin-greeting {
     font-weight: 500;
-    color: white;
+    color: #f5f5f0; /* Beige white text */
 }
 
 .nav-links {
@@ -83,7 +83,7 @@ body {
 }
 
 .nav-link {
-    color: white;
+    color: #f5f5f0; /* Beige white text */
     text-decoration: none;
     font-weight: 500;
     padding: 8px 15px;
@@ -95,21 +95,23 @@ body {
 }
 
 .nav-link.logout {
-    background-color: rgba(231, 76, 60, 0.9);
+    background-color: rgba(76, 175, 80, 0.9); /* Green background */
 }
 
 .nav-link.logout:hover {
-    background-color: #c0392b;
+    background-color: #388e3c; /* Darker green on hover */
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-link.user-panel {
-    background-color: rgba(52, 152, 219, 0.9);
+    background-color: rgba(56, 142, 60, 0.9); /* Dark green background */
 }
 
 .nav-link.user-panel:hover {
-    background-color: #2980b9;
+    background-color: #2e7d32; /* Even darker green on hover */
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Main Dashboard */
@@ -125,20 +127,21 @@ body {
     text-align: center;
     margin-bottom: 3rem;
     padding: 2rem;
-    background: white;
+    background: #ffffff; /* White background */
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e8f5e9; /* Light green border */
 }
 
 .dashboard-header h1 {
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: #1a472a; /* Dark green text */
     margin-bottom: 0.5rem;
     font-weight: 700;
 }
 
 .dashboard-subtitle {
-    color: #7f8c8d;
+    color: #4caf50; /* Green text */
     font-size: 1.1rem;
     font-weight: 400;
 }
@@ -156,7 +159,7 @@ body {
 }
 
 .option-card {
-    background: white;
+    background: #ffffff; /* White background */
     border-radius: 12px;
     padding: 2rem;
     display: flex;
@@ -177,67 +180,67 @@ body {
 }
 
 .create-post {
-    border-top: 5px solid #27ae60;
+    border-top: 5px solid #388e3c; /* Dark green border */
 }
 
 .create-post:hover {
-    border-color: #27ae60;
+    border-color: #388e3c;
 }
 
 .update-post {
-    border-top: 5px solid #3498db;
+    border-top: 5px solid #4caf50; /* Green border */
 }
 
 .update-post:hover {
-    border-color: #3498db;
+    border-color: #4caf50;
 }
 
 .see-posts {
-    border-top: 5px solid #9b59b6;
+    border-top: 5px solid #81c784; /* Light green border */
 }
 
 .see-posts:hover {
-    border-color: #9b59b6;
+    border-color: #81c784;
 }
 
 .delete-post {
-    border-top: 5px solid #e74c3c;
+    border-top: 5px solid #1b5e20; /* Very dark green border */
 }
 
 .delete-post:hover {
-    border-color: #e74c3c;
+    border-color: #1b5e20;
 }
 
 .manage-orders {
-    border-top: 5px solid #f39c12;
+    border-top: 5px solid #66bb6a; /* Medium green border */
 }
 
 .manage-orders:hover {
-    border-color: #f39c12;
+    border-color: #66bb6a;
 }
 
 .manage-users {
-    border-top: 5px solid #1abc9c;
+    border-top: 5px solid #43a047; /* Bright green border */
 }
 
 .manage-users:hover {
-    border-color: #1abc9c;
+    border-color: #43a047;
 }
 
 .analytics {
-    border-top: 5px solid #34495e;
+    border-top: 5px solid #2e7d32; /* Dark green border */
 }
 
 .analytics:hover {
-    border-color: #34495e;
+    border-color: #2e7d32;
 }
 
 .settings {
-    border-top: 5px solid #95a5a6;
+    border-top: 5px solid #a5d6a7; /* Very light green border */
 }
 
 .settings:hover {
-    border-color: #95a5a6;
+    border-color: #a5d6a7;
 }
 
 .option-icon {
@@ -253,54 +256,54 @@ body {
 }
 
 .create-post .option-icon {
-    background-color: rgba(39, 174, 96, 0.1);
-    color: #27ae60;
+    background-color: rgba(56, 142, 60, 0.1); /* Dark green with opacity */
+    color: #388e3c; /* Dark green */
 }
 
 .update-post .option-icon {
-    background-color: rgba(52, 152, 219, 0.1);
-    color: #3498db;
+    background-color: rgba(76, 175, 80, 0.1); /* Green with opacity */
+    color: #4caf50; /* Green */
 }
 
 .see-posts .option-icon {
-    background-color: rgba(155, 89, 182, 0.1);
-    color: #9b59b6;
+    background-color: rgba(129, 199, 132, 0.1); /* Light green with opacity */
+    color: #81c784; /* Light green */
 }
 
 .delete-post .option-icon {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
+    background-color: rgba(27, 94, 32, 0.1); /* Very dark green with opacity */
+    color: #1b5e20; /* Very dark green */
 }
 
 .manage-orders .option-icon {
-    background-color: rgba(243, 156, 18, 0.1);
-    color: #f39c12;
+    background-color: rgba(102, 187, 106, 0.1); /* Medium green with opacity */
+    color: #66bb6a; /* Medium green */
 }
 
 .manage-users .option-icon {
-    background-color: rgba(26, 188, 156, 0.1);
-    color: #1abc9c;
+    background-color: rgba(67, 160, 71, 0.1); /* Bright green with opacity */
+    color: #43a047; /* Bright green */
 }
 
 .analytics .option-icon {
-    background-color: rgba(52, 73, 94, 0.1);
-    color: #34495e;
+    background-color: rgba(46, 125, 50, 0.1); /* Dark green with opacity */
+    color: #2e7d32; /* Dark green */
 }
 
 .settings .option-icon {
-    background-color: rgba(149, 165, 166, 0.1);
-    color: #95a5a6;
+    background-color: rgba(165, 214, 167, 0.1); /* Very light green with opacity */
+    color: #a5d6a7; /* Very light green */
 }
 
 .option-title {
     font-size: 1.4rem;
     margin-bottom: 0.8rem;
-    color: #2c3e50;
+    color: #1a472a; /* Dark green text */
     font-weight: 600;
 }
 
 .option-description {
-    color: #7f8c8d;
+    color: #4caf50; /* Green text */
     margin-bottom: 1.5rem;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -308,62 +311,62 @@ body {
 }
 
 .option-link {
-    color: #2c3e50;
+    color: #1a472a; /* Dark green text */
     font-weight: 600;
     padding: 0.6rem 1.2rem;
     border-radius: 25px;
-    background-color: #f8f9fa;
+    background-color: #f5f5f0; /* Beige white background */
     transition: all 0.3s ease;
     display: inline-block;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #c8e6c9; /* Light green border */
 }
 
 .create-post:hover .option-link {
-    background-color: #27ae60;
-    color: white;
-    border-color: #27ae60;
+    background-color: #388e3c; /* Dark green */
+    color: #f5f5f0; /* Beige white text */
+    border-color: #388e3c;
 }
 
 .update-post:hover .option-link {
-    background-color: #3498db;
-    color: white;
-    border-color: #3498db;
+    background-color: #4caf50; /* Green */
+    color: #f5f5f0; /* Beige white text */
+    border-color: #4caf50;
 }
 
 .see-posts:hover .option-link {
-    background-color: #9b59b6;
-    color: white;
-    border-color: #9b59b6;
+    background-color: #81c784; /* Light green */
+    color: #1a472a; /* Dark green text */
+    border-color: #81c784;
 }
 
 .delete-post:hover .option-link {
-    background-color: #e74c3c;
-    color: white;
-    border-color: #e74c3c;
+    background-color: #1b5e20; /* Very dark green */
+    color: #f5f5f0; /* Beige white text */
+    border-color: #1b5e20;
 }
 
 .manage-orders:hover .option-link {
-    background-color: #f39c12;
-    color: white;
-    border-color: #f39c12;
+    background-color: #66bb6a; /* Medium green */
+    color: #1a472a; /* Dark green text */
+    border-color: #66bb6a;
 }
 
 .manage-users:hover .option-link {
-    background-color: #1abc9c;
-    color: white;
-    border-color: #1abc9c;
+    background-color: #43a047; /* Bright green */
+    color: #f5f5f0; /* Beige white text */
+    border-color: #43a047;
 }
 
 .analytics:hover .option-link {
-    background-color: #34495e;
-    color: white;
-    border-color: #34495e;
+    background-color: #2e7d32; /* Dark green */
+    color: #f5f5f0; /* Beige white text */
+    border-color: #2e7d32;
 }
 
 .settings:hover .option-link {
-    background-color: #95a5a6;
-    color: white;
-    border-color: #95a5a6;
+    background-color: #a5d6a7; /* Very light green */
+    color: #1a472a; /* Dark green text */
+    border-color: #a5d6a7;
 }
 
 /* Stats Section */
@@ -375,51 +378,52 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: #ffffff; /* White background */
     border-radius: 10px;
     padding: 1.8rem;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    border: 1px solid #eaeaea;
+    border: 1px solid #e8f5e9; /* Light green border */
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: #4caf50; /* Green border on hover */
 }
 
 .stat-icon {
     font-size: 2.2rem;
     margin-bottom: 1rem;
-    color: #3498db;
+    color: #4caf50; /* Green icon */
     height: 60px;
     width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: rgba(52, 152, 219, 0.1);
+    background-color: rgba(76, 175, 80, 0.1); /* Green with opacity */
     margin: 0 auto 1rem;
 }
 
 .stat-card:nth-child(2) .stat-icon {
-    color: #27ae60;
-    background-color: rgba(39, 174, 96, 0.1);
+    color: #388e3c; /* Dark green icon */
+    background-color: rgba(56, 142, 60, 0.1); /* Dark green with opacity */
 }
 
 .stat-card:nth-child(3) .stat-icon {
-    color: #9b59b6;
-    background-color: rgba(155, 89, 182, 0.1);
+    color: #81c784; /* Light green icon */
+    background-color: rgba(129, 199, 132, 0.1); /* Light green with opacity */
 }
 
 .stat-card:nth-child(4) .stat-icon {
-    color: #e74c3c;
-    background-color: rgba(231, 76, 60, 0.1);
+    color: #1b5e20; /* Very dark green icon */
+    background-color: rgba(27, 94, 32, 0.1); /* Very dark green with opacity */
 }
 
 .stat-card h4 {
-    color: #7f8c8d;
+    color: #4caf50; /* Green text */
     font-size: 1rem;
     margin-bottom: 0.8rem;
     font-weight: 500;
@@ -430,12 +434,12 @@ body {
 .stat-number {
     font-size: 2.4rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: #1a472a; /* Dark green text */
     margin-bottom: 0.5rem;
 }
 
 .stat-change {
-    color: #27ae60;
+    color: #388e3c; /* Dark green text */
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -446,15 +450,16 @@ body {
 
 /* Footer */
 .footer {
-    background-color: #2c3e50;
+    background: linear-gradient(135deg, #1a472a 0%, #2e7d32 100%); /* Dark green to green gradient */
     padding: 1.8rem;
     text-align: center;
     margin-top: 4rem;
-    color: white;
+    color: #f5f5f0; /* Beige white text */
 }
 
 .footer p {
     margin-bottom: 0.8rem;
+    color: #f5f5f0; /* Beige white text */
 }
 
 .footer-links {
@@ -465,13 +470,13 @@ body {
 }
 
 .footer-links a {
-    color: #3498db;
+    color: #a5d6a7; /* Light green text */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-links a:hover {
-    color: white;
+    color: #ffffff; /* White on hover */
     text-decoration: underline;
 }
 
