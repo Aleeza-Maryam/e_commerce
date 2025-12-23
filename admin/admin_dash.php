@@ -25,7 +25,7 @@
                     <span class="admin-greeting">Hello, Admin</span>
                 </div>
                 <div class="nav-links">
-                    <a href="#" class="nav-link logout">
+                    <a href="../Home/main_page.html" class="nav-link logout">
                         <i class="fas fa-arrow-right-from-bracket"></i>
                         Logout
                     </a>
@@ -41,7 +41,7 @@
     <!-- Main Dashboard -->
     <div class="main-container">
         <header class="dashboard-header">
-            <h1>E-commerce Dashboard</h1>
+            <h1>Cartify Dashboard</h1>
             <p class="dashboard-subtitle">Manage your online store efficiently</p>
         </header>
 
@@ -56,7 +56,7 @@
                 <span class="option-link">Add New →</span>
             </a>
 
-            <a href="#" class="option-card update-post">
+            <a href="update_products.html" class="option-card update-post">
                 <div class="option-icon">
                     <i class="fas fa-edit"></i>
                 </div>
@@ -75,7 +75,7 @@
                 <span class="option-link">View All →</span>
             </a>
 
-            <a href="#" class="option-card delete-post">
+            <a href="delete_products.html" class="option-card delete-post">
                 <div class="option-icon">
                     <i class="fas fa-trash-alt"></i>
                 </div>

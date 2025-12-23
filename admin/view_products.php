@@ -121,6 +121,7 @@ fetch("get_products.php")
                 <div class="description-section">
                     <div class="description-label">Description</div>
                     <div class="description-text">${shortDesc}</div>
+                    
                 </div>
                 
                 <div class="product-footer">
