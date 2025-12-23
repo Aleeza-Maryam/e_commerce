@@ -242,7 +242,7 @@
                                 <i class="fas fa-file-draft"></i>
                                 Save as Draft
                             </button>
-                            <a href="dashboard.html" class="btn-cancel">
+                            <a href="admin_dash.php" class="btn-cancel">
                                 <i class="fas fa-times"></i>
                                 Cancel
                             </a>
