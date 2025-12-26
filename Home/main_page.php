@@ -21,11 +21,11 @@
             </a>
 
             <ul class="nav-links">
-                <li><a href="#" class="active">HOME</a></li>
-                <li><a href="#">PAGES</a></li>
-                <li><a href="#">PRODUCTS</a></li>
-                <li><a href="#">BLOG</a></li>
-                <li><a href="#">CONTACT</a></li>
+                <li><a href="#hero-sale" class="active">HOME</a></li>
+                <li><a href="#products-section">PRODUCTS</a></li>
+                <li><a href="#categories-section">CATEGORIES</a></li>
+                <li><a href="#best-sellers-section">BEST SELLERS</a></li>
+                <li><a href="#footer-section">CONTACT</a></li>
             </ul>
 
             <div class="nav-icons">
@@ -40,7 +40,7 @@
     </header>
 
     <!-- Hero Sale Section -->
-    <section class="hero-sale">
+    <section class="hero-sale" id="hero-sale">
         <div class="sale-content">
             <div class="sale-badge">Sale 20% Off</div>
             <h1 class="sale-title">On Everything</h1>
@@ -53,13 +53,13 @@
     </section>
 
     <!-- Main Products Section -->
-    <section class="products-section">
+    <section class="products-section" id="products-section">
         <div class="products-container">
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-content">
                     <!-- Categories -->
-                    <div class="sidebar-section">
+                    <div class="sidebar-section" id="categories-section">
                         <h3 class="sidebar-title">CATEGORY</h3>
                         <ul class="category-list" id="categoryList">
                             <!-- Categories will be loaded from database -->
@@ -67,7 +67,7 @@
                     </div>
 
                     <!-- Best Sellers -->
-                    <div class="sidebar-section">
+                    <div class="sidebar-section" id="best-sellers-section">
                         <h3 class="sidebar-title">BEST SELLERS</h3>
                         <div id="bestSellers">
                             <!-- Best sellers will be loaded from database -->
@@ -91,7 +91,7 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="footer-section">
         <div class="footer-content">
             <div class="footer-column">
                 <h3>Cartify.</h3>
@@ -101,11 +101,11 @@
             <div class="footer-column">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Products</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#hero-sale">Home</a></li>
+                    <li><a href="#products-section">Products</a></li>
+                    <li><a href="#categories-section">Categories</a></li>
+                    <li><a href="#best-sellers-section">Best Sellers</a></li>
+                    <li><a href="#footer-section">Contact Us</a></li>
                 </ul>
             </div>
 
@@ -134,7 +134,9 @@
         </div>
     </footer>
 
+    <!-- JavaScript remains the same -->
     <script>
+        // ... all your existing JavaScript code remains exactly the same ...
         // Generate star rating HTML
         function generateStars(rating) {
             let stars = '';
@@ -243,7 +245,7 @@
                          <div class="product-price">
                          <span class="current-price">$${p.product_price}</span>
                            </div>
-                           <a href="product_details.php?id=1" class="view-details">
+             <a href="product_details.php?id=${p.id}" class="view-details">
     <i class="fas fa-arrow-right"></i>
 </a>
 

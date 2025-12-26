@@ -16,7 +16,7 @@
         <div class="content">
             <h1>CARTIFY <i class="fas fa-shopping-cart"></i></h1>
             <p>Elevate Your Shopping Experience.</p>
-            <a href="main_page.html" class="btn">Get Started</a>
+            <a href="main_page.php" class="btn">Get Started</a>
         </div>
     </div>
 
