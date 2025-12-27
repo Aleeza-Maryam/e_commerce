@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,32 +24,41 @@
                 <div class="logo-text">Cartify<span>.</span></div>
             </a>
 
-            <ul class="nav-links">
+           <ul class="nav-links">
                 <li><a href="#hero-sale" class="active">HOME</a></li>
                 <li><a href="#products-section">PRODUCTS</a></li>
-                <li><a href="#categories-section">CATEGORIES</a></li>
+                <li><a href="#productsGrid">CATEGORIES</a></li>
                 <li><a href="#best-sellers-section">BEST SELLERS</a></li>
-                <li><a href="#footer-section">CONTACT</a></li>
+                <li><a href="#Contact">CONTACT</a></li>
             </ul>
 
             <div class="nav-icons">
-                <a href="#"><i class="fas fa-search"></i></a>
-                <a href="#"><i class="fas fa-user"></i></a>
-                <a href="#" class="cart-icon">
+                <!-- Search -->
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="Search products..." />
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <!-- Profile / Login choice -->
+                <!-- Profile / Login choice -->
+                <a href="login_choice.php"><i class="fas fa-user"></i></a>
+
+
+                <a href="cart.php" class="cart-icon">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">3</span>
+                    <span class="cart-count"><?= isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0 ?></span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Hero Sale Section -->
-    <section class="hero-sale" id="hero-sale">
+    <section class="hero-sale">
         <div class="sale-content">
             <div class="sale-badge">Sale 20% Off</div>
             <h1 class="sale-title">On Everything</h1>
             <p class="sale-description">
-                HE BIG EVENT IS HERE! ⚡️
+                THE BIG EVENT IS HERE! ⚡️
                 Up to 50% OFF sitewide. No codes. No stress. Just pure style. Call to Action: Tap to shop now!
             </p>
             <a href="#" class="sale-button">Shop Now</a>
@@ -53,59 +66,56 @@
     </section>
 
     <!-- Main Products Section -->
-    <section class="products-section" id="products-section">
+     <section class="products-section" id="products">
+    <section class="products-section">
         <div class="products-container">
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-content">
-                    <!-- Categories -->
-                    <div class="sidebar-section" id="categories-section">
+                    <div class="sidebar-section">
                         <h3 class="sidebar-title">CATEGORY</h3>
                         <ul class="category-list" id="categoryList">
-                            <!-- Categories will be loaded from database -->
+                            <!-- Categories loaded dynamically -->
                         </ul>
                     </div>
 
-                    <!-- Best Sellers -->
                     <div class="sidebar-section" id="best-sellers-section">
                         <h3 class="sidebar-title">BEST SELLERS</h3>
-                        <div id="bestSellers">
-                            <!-- Best sellers will be loaded from database -->
-                        </div>
+                        <div id="bestSellers"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Main Products Area -->
-            <div class="products-main">
+            <div class="products-main" id="products-section">
                 <div class="section-header">
                     <h2 class="section-title">New <span>Products</span></h2>
                     <div class="products-count" id="productCount">0 Products</div>
                 </div>
 
                 <div class="products-grid" id="productsGrid">
-                    <!-- Products will be loaded from database -->
+                    <!-- Products loaded dynamically -->
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="footer-section">
-        <div class="footer-content">
+    <footer>
+        <div class="footer-content" >
             <div class="footer-column">
                 <h3>Cartify.</h3>
                 <p>Elevate your shopping experience with premium products, quality service, and seamless shopping.</p>
             </div>
 
-            <div class="footer-column">
+            <div class="footer-column" id="Contact">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="#hero-sale">Home</a></li>
-                    <li><a href="#products-section">Products</a></li>
-                    <li><a href="#categories-section">Categories</a></li>
-                    <li><a href="#best-sellers-section">Best Sellers</a></li>
-                    <li><a href="#footer-section">Contact Us</a></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact Us</a></li>
                 </ul>
             </div>
 
@@ -134,87 +144,72 @@
         </div>
     </footer>
 
-    <!-- JavaScript remains the same -->
+    <!-- JS Section -->
     <script>
-        // ... all your existing JavaScript code remains exactly the same ...
-        // Generate star rating HTML
+        // ⭐ Profile icon login choice
+        function chooseLogin() {
+            const choice = prompt("Login as:\n1. User\n2. Admin\n\nEnter 1 or 2");
+            if(choice === "1") {
+                window.location.href = "main_page.php"; // Or user login page
+            } else if(choice === "2") {
+                window.location.href = "../admin/admin_dash.php";
+            } else {
+                alert("Invalid choice!");
+            }
+        }
+
         function generateStars(rating) {
             let stars = '';
             for (let i = 1; i <= 5; i++) {
-                if (i <= rating) {
-                    stars += '<i class="fas fa-star"></i>';
-                } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
-                    stars += '<i class="fas fa-star-half-alt"></i>';
-                } else {
-                    stars += '<i class="far fa-star"></i>';
-                }
+                if (i <= rating) stars += '<i class="fas fa-star"></i>';
+                else if (i === Math.ceil(rating) && !Number.isInteger(rating)) stars += '<i class="fas fa-star-half-alt"></i>';
+                else stars += '<i class="far fa-star"></i>';
             }
             return stars;
         }
 
-        // Load categories from database
         function loadCategories() {
             fetch("get_categories.php")
                 .then(res => res.json())
                 .then(data => {
                     const categoryList = document.getElementById('categoryList');
-                    categoryList.innerHTML = '';
-
-                    // All products option
-                    categoryList.innerHTML += `
-            <li><a href="#" class="active" data-category="">All</a></li>
-        `;
-
+                    categoryList.innerHTML = '<li><a href="#" class="active" data-category="">All</a></li>';
                     data.forEach(cat => {
-                        categoryList.innerHTML += `
-                <li><a href="#" data-category="${cat}">${cat}</a></li>
-            `;
+                        categoryList.innerHTML += `<li><a href="#" data-category="${cat}">${cat}</a></li>`;
                     });
 
                     document.querySelectorAll('#categoryList a').forEach(link => {
                         link.addEventListener('click', function(e) {
                             e.preventDefault();
-
-                            document.querySelectorAll('#categoryList a')
-                                .forEach(a => a.classList.remove('active'));
+                            document.querySelectorAll('#categoryList a').forEach(a => a.classList.remove('active'));
                             this.classList.add('active');
-
                             loadProducts(this.dataset.category);
                         });
                     });
                 });
         }
 
-        // Load best sellers from database
         function loadBestSellers() {
             fetch("get_best_sellers.php")
                 .then(res => res.json())
                 .then(data => {
                     const div = document.getElementById("bestSellers");
                     div.innerHTML = '';
-
                     data.forEach(p => {
                         div.innerHTML += `
-                <div class="best-seller-item">
-                    <div class="bs-image">
-                        <img src="../admin/uploads/${p.image}">
-
-                    </div>
-                    <div class="bs-details">
-                        <div class="bs-name">${p.product_name}</div>
-                        <div class="bs-price">$${p.product_price}</div>
-                    </div>
-                    <div class="bs-rating">
-    ${generateStars(5)}
-</div>
-
-                </div>
-            `;
+                            <div class="best-seller-item">
+                                <div class="bs-image"><img src="../admin/uploads/${p.image}"></div>
+                                <div class="bs-details">
+                                    <div class="bs-name">${p.product_name}</div>
+                                    <div class="bs-price">$${p.product_price}</div>
+                                </div>
+                                <div class="bs-rating">${generateStars(5)}</div>
+                            </div>
+                        `;
                     });
                 });
         }
 
-        // Load products from database
         function loadProducts(category = '') {
             let url = "get_products_front.php";
             if (category) url += "?category=" + encodeURIComponent(category);
@@ -224,118 +219,125 @@
                 .then(data => {
                     const grid = document.getElementById('productsGrid');
                     grid.innerHTML = '';
+                    document.getElementById('productCount').textContent = `${data.length} Products`;
 
-                    document.getElementById('productCount')
-                        .textContent = `${data.length} Products`;
+                    if(data.length === 0) {
+                        grid.innerHTML = `<p style="padding:20px;">No products found.</p>`;
+                        return;
+                    }
 
                     data.forEach(p => {
                         grid.innerHTML += `
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="../admin/uploads/${p.image}" alt="${p.product_name}">
-                    </div>
-                   <div class="product-info">
-                    <div class="product-category">${p.category}</div>
-                        <h3 class="product-name">${p.product_name}</h3>
-
-                         <div class="product-rating">
-                             ${generateStars(4)}
-                           </div>
-
-                         <div class="product-price">
-                         <span class="current-price">$${p.product_price}</span>
-                           </div>
-             <a href="product_details.php?id=${p.id}" class="view-details">
-    <i class="fas fa-arrow-right"></i>
-</a>
-
-
-                     </div>
-
-                </div>
-            `;
+                            <div class="product-card">
+                                <div class="product-image"><img src="../admin/uploads/${p.image}" alt="${p.product_name}"></div>
+                                <div class="product-info">
+                                    <div class="product-category">${p.category}</div>
+                                    <h3 class="product-name">${p.product_name}</h3>
+                                    <div class="product-rating">${generateStars(4)}</div>
+                                    <div class="product-price"><span class="current-price">$${p.product_price}</span></div>
+                                    <div class="product-actions">
+                                        <a href="product_details.php?id=${p.id}" class="view-details"><i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     });
                 });
         }
 
-        // Filter products by category
-        function filterProductsByCategory(categoryId) {
-            // In a real application, this would be a database query
-            console.log(`Filtering by category ID: ${categoryId}`);
-            // For demo, we'll just reload all products
-            loadProducts();
-        }
+        // Search functionality
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const query = document.getElementById('searchInput').value.trim();
+            if(!query) return;
+            loadProductsBySearch(query);
+        });
 
-        // Add to cart function
-        function addToCart(productId) {
-            const cartCount = document.querySelector('.cart-count');
-            let count = parseInt(cartCount.textContent);
-            count++;
-            cartCount.textContent = count;
-
-            // Animation
-            cartCount.style.transform = 'scale(1.5)';
-            setTimeout(() => {
-                cartCount.style.transform = 'scale(1)';
-            }, 300);
-
-            // In a real application, this would send an AJAX request to add item to cart
-            console.log(`Added product ${productId} to cart`);
-
-            // Show notification
-            showNotification('Product added to cart!');
-        }
-
-        // Show notification
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #2E7D32;
-                color: #FFFFFF;
-                padding: 15px 25px;
-                border-radius: 5px;
-                z-index: 1001;
-                animation: slideIn 0.3s ease-out;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 2000);
-
-            // Add keyframes for animation
-            if (!document.getElementById('notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
+        function loadProductsBySearch(query) {
+            fetch("get_products_front.php?search=" + encodeURIComponent(query))
+                .then(res => res.json())
+                .then(data => {
+                    const grid = document.getElementById('productsGrid');
+                    grid.innerHTML = '';
+                    if(data.length === 0) {
+                        grid.innerHTML = `<p style="padding:20px;">No products found for "${query}"</p>`;
+                        document.getElementById('productCount').textContent = "0 Products";
+                        return;
                     }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
+                    document.getElementById('productCount').textContent = `${data.length} Products`;
+                    data.forEach(p => {
+                        grid.innerHTML += `
+                            <div class="product-card">
+                                <div class="product-image"><img src="../admin/uploads/${p.image}" alt="${p.product_name}"></div>
+                                <div class="product-info">
+                                    <div class="product-category">${p.category}</div>
+                                    <h3 class="product-name">${p.product_name}</h3>
+                                    <div class="product-rating">${generateStars(4)}</div>
+                                    <div class="product-price"><span class="current-price">$${p.product_price}</span></div>
+                                    <div class="product-actions">
+                                        <a href="product_details.php?id=${p.id}" class="view-details"><i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
         }
 
-        // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             loadCategories();
             loadBestSellers();
             loadProducts();
         });
     </script>
-</body>
 
+    <style>
+        /* Header Search */
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .search-wrapper input {
+            border: none;
+            padding: 6px 12px;
+            outline: none;
+            width: 180px;
+        }
+
+        .search-wrapper button {
+            border: none;
+            background: #3e7c4f;
+            color: white;
+            padding: 6px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-wrapper button i {
+            font-size: 14px;
+        }
+
+        .search-wrapper input::placeholder {
+            color: #999;
+        }
+
+        /* Hover effects */
+        .search-wrapper button:hover {
+            background: #2e5b36;
+        }
+    </style>
+</body>
 </html>

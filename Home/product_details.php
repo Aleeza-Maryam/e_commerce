@@ -1,67 +1,90 @@
 <?php
 ini_set('session.cookie_path', '/');
 session_start();
+if (!isset($_GET['id'])) die("Product ID not found");
+$page_id = intval($_GET['id']);
 
+/* ---------------- WISHLIST ---------------- */
+if (!isset($_SESSION['wishlist'])) {
+    $_SESSION['wishlist'] = [];
+}
+
+$isWishlisted = isset($_SESSION['wishlist'][$page_id]);
+
+if (isset($_POST['toggle_wishlist'])) {
+    if ($isWishlisted) {
+        unset($_SESSION['wishlist'][$page_id]);
+    } else {
+        $_SESSION['wishlist'][$page_id] = true;
+    }
+    header("Location: product_details.php?id=$page_id");
+    exit;
+}
+/* ---------------- BUY NOW (DIRECT) ---------------- */
+if (isset($_POST['buy_now'])) {
+
+    $_SESSION['buy_now'] = [
+        'id'    => $product['id'],
+        'name'  => $product['product_name'],
+        'price' => $product['discount_price'] ?? $product['product_price'],
+        'image' => $product['image'],
+        'qty'   => max(1, intval($_POST['quantity']))
+    ];
+
+    header("Location: checkout.php");
+    exit;
+}
 
 $conn = mysqli_connect("localhost", "root", "", "cartify");
+if (!$conn) die("DB connection failed");
 
-if (!$conn) {
-    die("DB connection failed");
-}
+if (!isset($_GET['id'])) die("Product ID not found");
 
-if (!isset($_GET['id'])) {
-    die("Product ID not found");
-}
+$page_id = intval($_GET['id']);
 
-$id = intval($_GET['id']);
-
-$query = "SELECT * FROM products WHERE id = $id";
+$query = "SELECT * FROM products WHERE id = $page_id";
 $result = mysqli_query($conn, $query);
-
-if (!$result || mysqli_num_rows($result) == 0) {
-    die("Product not found");
-}
+if (!$result || mysqli_num_rows($result) == 0) die("Product not found");
 
 $product = mysqli_fetch_assoc($result);
 
-// Handle add to cart
+/* ---------------- ADD TO CART ---------------- */
 if (isset($_POST['add_to_cart'])) {
-    $id = $_POST['product_id'];
-    $qty = intval($_POST['quantity']);
-    
-    // Initialize cart if not exists
+
+    $product_id = intval($_POST['product_id']);
+    $qty = max(1, intval($_POST['quantity']));
+
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
-    
-    // Check if product already in cart
-    if (isset($_SESSION['cart'][$id])) {
-        $_SESSION['cart'][$id]['qty'] += $qty;
+
+    if (isset($_SESSION['cart'][$product_id])) {
+        $_SESSION['cart'][$product_id]['qty'] += $qty;
     } else {
-        $_SESSION['cart'][$id] = [
-            'id' => $id,
-            'name' => $product['product_name'],
+        $_SESSION['cart'][$product_id] = [
+            'id'    => $product_id,
+            'name'  => $product['product_name'],
             'price' => $product['discount_price'] ?? $product['product_price'],
             'image' => $product['image'],
-            'qty' => $qty
+            'qty'   => $qty
         ];
     }
-    
-    // Show success message
-    $cart_success = "Added $qty item(s) to cart!";
-    
-    // Redirect to same page to show updated cart count
-    header("Location: product_details.php?id=$id");
-    exit();
+
+    $_SESSION['cart_success'] = "Added $qty item(s) to cart!";
+    header("Location: product_details.php?id=$page_id");
+    exit;
 }
 
-// Calculate cart count
+/* ---------------- CART COUNT ---------------- */
 $cart_count = 0;
-if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+if (!empty($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $item) {
         $cart_count += $item['qty'];
     }
 }
+
+$cart_success = $_SESSION['cart_success'] ?? null;
+unset($_SESSION['cart_success']);
 ?>
 
 <!DOCTYPE html>
@@ -184,7 +207,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
             </div>
 
             <!-- Action Buttons -->
-            <form method="POST" action="" id="addToCartForm">
+            <form method="POST" action="product_details.php?id=<?php echo $product['id']; ?>">
                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                 <input type="hidden" name="quantity" id="qtyField" value="1">
                 
@@ -199,13 +222,18 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
                         <i class="fas fa-cart-plus"></i> Add to Cart
                     </button>
                     
-                    <button type="button" class="btn buy-now">
-                        <i class="fas fa-bolt"></i> Buy Now
+                    <button type="submit" name="buy_now" class="btn buy-now">
+                         <i class="fas fa-bolt"></i> Buy Now
                     </button>
+
                     
-                    <button type="button" class="wishlist-btn">
-                        <i class="far fa-heart"></i>
-                    </button>
+                    <form method="POST" style="display:inline;">
+                       <button type="submit" name="toggle_wishlist"
+                        class="wishlist-btn <?php echo $isWishlisted ? 'active' : ''; ?>">
+                        <i class="<?php echo $isWishlisted ? 'fas' : 'far'; ?> fa-heart"></i>
+                       </button>
+                    </form>
+
                 </div>
             </form>
 
@@ -358,19 +386,6 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
         }, 1500);
     });
 
-    // Wishlist toggle
-    document.querySelector('.wishlist-btn').addEventListener('click', function() {
-        const icon = this.querySelector('i');
-        if (icon.classList.contains('far')) {
-            icon.classList.replace('far', 'fas');
-            this.style.color = '#3e7c4f'; // Dark green
-            showNotification('Added to wishlist!');
-        } else {
-            icon.classList.replace('fas', 'far');
-            this.style.color = '#8b7355'; // Light brown
-            showNotification('Removed from wishlist');
-        }
-    });
 
     // Buy Now button
     document.querySelector('.buy-now').addEventListener('click', function() {
@@ -425,6 +440,22 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
         }, 3000);
     }
 </script>
+<style>
+.wishlist-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: #8b7355;
+}
 
+.wishlist-btn.active {
+    color: #e63946; /* red heart */
+}
+
+.wishlist-btn:hover {
+    transform: scale(1.1);
+}
+</style>
 </body>
 </html>

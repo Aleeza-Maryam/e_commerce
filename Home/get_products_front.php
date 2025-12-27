@@ -1,19 +1,18 @@
 <?php
-$conn = mysqli_connect("localhost","root","","cartify");
+$conn = mysqli_connect("localhost", "root", "", "cartify");
 
 $category = $_GET['category'] ?? '';
+$search   = $_GET['search'] ?? '';
 
-if($category != ''){
-    $stmt = mysqli_prepare(
-        $conn,
-        "SELECT * FROM products WHERE category=? AND status='active'"
-    );
-    mysqli_stmt_bind_param($stmt,"s",$category);
-}else{
-    $stmt = mysqli_prepare(
-        $conn,
-        "SELECT * FROM products WHERE status='active' ORDER BY RAND() LIMIT 8"
-    );
+if($category != '') {
+    $stmt = mysqli_prepare($conn, "SELECT * FROM products WHERE category=? AND status='active'");
+    mysqli_stmt_bind_param($stmt, "s", $category);
+} elseif($search != '') {
+    $searchTerm = "%$search%";
+    $stmt = mysqli_prepare($conn, "SELECT * FROM products WHERE product_name LIKE ? AND status='active'");
+    mysqli_stmt_bind_param($stmt, "s", $searchTerm);
+} else {
+    $stmt = mysqli_prepare($conn, "SELECT * FROM products WHERE status='active' ORDER BY RAND() LIMIT 12");
 }
 
 mysqli_stmt_execute($stmt);

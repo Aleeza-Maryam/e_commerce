@@ -25,14 +25,11 @@
                     <span class="admin-greeting">Hello, Admin</span>
                 </div>
                 <div class="nav-links">
-                    <a href="../Home/main_page.html" class="nav-link logout">
+                    <a href="../Home/main_page.php" class="nav-link logout">
                         <i class="fas fa-arrow-right-from-bracket"></i>
                         Logout
                     </a>
-                    <a href="#" class="nav-link user-panel">
-                        <i class="fas fa-users"></i>
-                        User Panel
-                    </a>
+                   
                 </div>
             </div>
         </div>
@@ -96,32 +93,10 @@
                 <span class="option-link">View Orders →</span>
             </a>
 
-            <a href="#" class="option-card manage-users">
-                <div class="option-icon">
-                    <i class="fas fa-user-cog"></i>
-                </div>
-                <h3 class="option-title">Manage Users</h3>
-                <p class="option-description">Administer customer accounts</p>
-                <span class="option-link">View Users →</span>
-            </a>
+           
+          
 
-            <a href="#" class="option-card analytics">
-                <div class="option-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="option-title">Analytics</h3>
-                <p class="option-description">Sales data and store statistics</p>
-                <span class="option-link">View Reports →</span>
-            </a>
-
-            <a href="#" class="option-card settings">
-                <div class="option-icon">
-                    <i class="fas fa-cog"></i>
-                </div>
-                <h3 class="option-title">Settings</h3>
-                <p class="option-description">Store configuration and settings</p>
-                <span class="option-link">Configure →</span>
-            </a>
+      
         </div>
 
         <!-- Quick Stats Section -->
