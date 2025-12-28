@@ -14,6 +14,7 @@ session_start();
 </head>
 
 <body>
+    <!-- Header -->
     <header>
         <div class="nav-container">
             <a href="#" class="logo">
@@ -32,11 +33,14 @@ session_start();
             </ul>
 
             <div class="nav-icons">
+                <!-- Search -->
                 <div class="search-wrapper">
                     <input type="text" id="searchInput" placeholder="Search products..." />
                     <button id="searchBtn"><i class="fas fa-search"></i></button>
                 </div>
 
+                <!-- Profile / Login choice -->
+                <!-- Profile / Login choice -->
                 <a href="login_choice.php"><i class="fas fa-user"></i></a>
 
 
@@ -48,6 +52,7 @@ session_start();
         </div>
     </header>
 
+    <!-- Hero Sale Section -->
     <section class="hero-sale">
         <div class="sale-content">
             <div class="sale-badge">Sale 20% Off</div>
@@ -60,15 +65,18 @@ session_start();
         </div>
     </section>
 
-    <section class="products-section" id="products">
+    <!-- Main Products Section -->
+     <section class="products-section" id="products">
     <section class="products-section">
         <div class="products-container">
+            <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-content">
                     <div class="sidebar-section">
                         <h3 class="sidebar-title">CATEGORY</h3>
                         <ul class="category-list" id="categoryList">
-                            </ul>
+                            <!-- Categories loaded dynamically -->
+                        </ul>
                     </div>
 
                     <div class="sidebar-section" id="best-sellers-section">
@@ -78,6 +86,7 @@ session_start();
                 </div>
             </div>
 
+            <!-- Main Products Area -->
             <div class="products-main" id="products-section">
                 <div class="section-header">
                     <h2 class="section-title">New <span>Products</span></h2>
@@ -85,11 +94,13 @@ session_start();
                 </div>
 
                 <div class="products-grid" id="productsGrid">
-                    </div>
+                    <!-- Products loaded dynamically -->
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content" >
             <div class="footer-column">
@@ -115,7 +126,6 @@ session_start();
                     <li><a href="#">Shipping Policy</a></li>
                     <li><a href="#">Returns & Exchanges</a></li>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </div>
 
@@ -134,6 +144,7 @@ session_start();
         </div>
     </footer>
 
+    <!-- JS Section -->
     <script>
         // ⭐ Profile icon login choice
         function chooseLogin() {
@@ -190,7 +201,7 @@ session_start();
                                 <div class="bs-image"><img src="../admin/uploads/${p.image}"></div>
                                 <div class="bs-details">
                                     <div class="bs-name">${p.product_name}</div>
-                                    <div class="bs-price">₹${p.product_price}</div>
+                                    <div class="bs-price">$${p.product_price}</div>
                                 </div>
                                 <div class="bs-rating">${generateStars(5)}</div>
                             </div>
@@ -223,7 +234,7 @@ session_start();
                                     <div class="product-category">${p.category}</div>
                                     <h3 class="product-name">${p.product_name}</h3>
                                     <div class="product-rating">${generateStars(4)}</div>
-                                    <div class="product-price"><span class="current-price">₹${p.product_price}</span></div>
+                                    <div class="product-price"><span class="current-price">$${p.product_price}</span></div>
                                     <div class="product-actions">
                                         <a href="product_details.php?id=${p.id}" class="view-details"><i class="fas fa-arrow-right"></i></a>
                                     </div>
@@ -261,7 +272,7 @@ session_start();
                                     <div class="product-category">${p.category}</div>
                                     <h3 class="product-name">${p.product_name}</h3>
                                     <div class="product-rating">${generateStars(4)}</div>
-                                    <div class="product-price"><span class="current-price">₹${p.product_price}</span></div>
+                                    <div class="product-price"><span class="current-price">$${p.product_price}</span></div>
                                     <div class="product-actions">
                                         <a href="product_details.php?id=${p.id}" class="view-details"><i class="fas fa-arrow-right"></i></a>
                                     </div>
