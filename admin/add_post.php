@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product | Cartify Admin</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="add_post.css">
 </head>
 <body>
     <div class="admin-wrapper">
-        <!-- Header -->
         <header class="admin-header">
             <div class="header-container">
                 <div class="brand">
@@ -34,10 +31,8 @@
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="main-content">
             <div class="form-container">
-                <!-- Page Header -->
                 <div class="page-header">
                     <div class="header-content">
                         <h2><i class="fas fa-plus-circle"></i> Add New Product</h2>
@@ -51,10 +46,8 @@
                     </div>
                 </div>
 
-                <!-- Product Form -->
                 <form action="save_product.php" method="POST" enctype="multipart/form-data" class="product-form" id="productForm">
                     
-                    <!-- Basic Information Section -->
                     <div class="form-section">
                         <div class="section-title">
                             <i class="fas fa-info-circle"></i>
@@ -111,7 +104,6 @@
                         </div>
                     </div>
 
-                    <!-- Pricing & Inventory Section -->
                     <div class="form-section">
                         <div class="section-title">
                             <i class="fas fa-dollar-sign"></i>
@@ -125,7 +117,7 @@
                                     Product Price *
                                 </label>
                                 <div class="input-with-icon">
-                                    <span class="currency">₹</span>
+                                    <span class="currency">RS:&nbsp;&nbsp;</span>
                                     <input type="number" id="product_price" name="product_price" placeholder="0.00" step="0.01" min="0" required>
                                 </div>
                                 <div class="form-hint">Base selling price</div>
@@ -137,7 +129,7 @@
                                     Discount Price
                                 </label>
                                 <div class="input-with-icon">
-                                    <span class="currency">₹</span>
+                                    <span class="currency">RS:&nbsp;&nbsp;</span>
                                     <input type="number" id="discount_price" name="discount_price" placeholder="0.00" step="0.01" min="0">
                                 </div>
                                 <div class="form-hint">Special offer price (optional)</div>
@@ -177,7 +169,6 @@
                         </div>
                     </div>
 
-                    <!-- Product Image Section -->
                     <div class="form-section">
                         <div class="section-title">
                             <i class="fas fa-images"></i>
@@ -205,7 +196,6 @@
                         </div>
                     </div>
 
-                    <!-- Description Section -->
                     <div class="form-section">
                         <div class="section-title">
                             <i class="fas fa-align-left"></i>
@@ -231,7 +221,6 @@
                         </div>
                     </div>
 
-                    <!-- Form Actions -->
                     <div class="form-actions">
                         <div class="action-buttons">
                             <button type="submit" class="btn-primary">
@@ -252,7 +241,6 @@
             </div>
         </main>
 
-        <!-- Footer -->
         <footer class="admin-footer">
             <p>Cartify Admin Panel &copy; 2023 | Product Management System</p>
         </footer>

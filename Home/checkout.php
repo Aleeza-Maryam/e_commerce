@@ -2,16 +2,15 @@
 session_start();
 require_once __DIR__ . '/../config/db.php';
 
-
+/* ===== PHPMailer (LOCAL FOLDER, NO COMPOSER) ===== */
 require_once __DIR__ . '/../PHPMailer/src/Exception.php';
 require_once __DIR__ . '/../PHPMailer/src/PHPMailer.php';
 require_once __DIR__ . '/../PHPMailer/src/SMTP.php';
 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
+/* ===== GET CART ITEMS ===== */
 if (!empty($_SESSION['cart'])) {
     $items = $_SESSION['cart'];
 } elseif (!empty($_SESSION['buy_now'])) {
@@ -20,117 +19,71 @@ if (!empty($_SESSION['cart'])) {
     $items = [];
 }
 
-
+/* ===== TOTAL ===== */
 $total = 0;
 foreach ($items as $item) {
-    $total += $item['price'] * $item['qty'];
+    $total += ($item['price'] * $item['qty']);
 }
-
 
 $errors = [];
 $success = '';
 
+/* ===== FORM SUBMIT ===== */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
-    $first_name  = trim($_POST['first_name']);
-    $last_name   = trim($_POST['last_name']);
-    $phone       = trim($_POST['phone']);
-    $email       = trim($_POST['email']);
-    $address     = trim($_POST['address']);
-    $city        = trim($_POST['city']);
-    $state       = trim($_POST['state']);
-    $country     = trim($_POST['country']);
-    $zip_code    = trim($_POST['zip_code']);
-    
-    $customer_name = $first_name . ' ' . $last_name;
 
-    // Validation
-    if (empty($first_name)) $errors[] = "First name is required";
-    if (empty($last_name)) $errors[] = "Last name is required";
-    if (empty($phone)) $errors[] = "Phone number is required";
-    if (empty($email)) $errors[] = "Email is required";
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Valid email is required";
-    if (empty($address)) $errors[] = "Address is required";
-    if (empty($city)) $errors[] = "City is required";
-    if (empty($state)) $errors[] = "State is required";
-    if (empty($zip_code)) $errors[] = "ZIP code is required";
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name  = trim($_POST['last_name'] ?? '');
+    $email      = trim($_POST['email'] ?? '');
+    $phone      = trim($_POST['phone'] ?? '');
+    $address    = trim($_POST['address'] ?? '');
+    $city       = trim($_POST['city'] ?? '');
+    $state      = trim($_POST['state'] ?? '');
+    $country    = trim($_POST['country'] ?? '');
+    $zip_code   = trim($_POST['zip_code'] ?? '');
+
+    /* ===== VALIDATION ===== */
+    if ($first_name == '') $errors[] = "First name required";
+    if ($last_name == '')  $errors[] = "Last name required";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Valid email required";
+    if ($phone == '') $errors[] = "Phone required";
+    if ($address == '') $errors[] = "Address required";
 
     if (empty($errors)) {
-        try {
-            /* ---------- GENERATE ORDER NUMBER ---------- */
-            $order_number = 'ORD-' . date('Ymd') . '-' . rand(1000, 9999);
-            
-            /* ---------- SAVE CUSTOMER WITH ORDER INFO ---------- */
-            // Check if customer exists
-            $check_sql = "SELECT customer_id FROM customers WHERE email = '$email'";
-            $check_result = mysqli_query($conn, $check_sql);
-            
-            if (mysqli_num_rows($check_result) > 0) {
-                // Customer exists, update with order info
-                $customer_row = mysqli_fetch_assoc($check_result);
-                $customer_id = $customer_row['customer_id'];
-                
-                $customer_sql = "UPDATE customers SET 
-                                first_name = '$first_name',
-                                last_name = '$last_name',
-                                phone = '$phone',
-                                address = '$address',
-                                city = '$city',
-                                state = '$state',
-                                country = '$country',
-                                zip_code = '$zip_code',
-                                last_order_number = '$order_number',
-                                last_order_amount = '$total',
-                                last_order_date = NOW(),
-                                total_orders = total_orders + 1,
-                                total_spent = total_spent + $total
-                                WHERE customer_id = $customer_id";
-            } else {
-                // New customer - first check if columns exist, if not add them
-                $check_columns = mysqli_query($conn, "SHOW COLUMNS FROM customers LIKE 'last_order_number'");
-                if (mysqli_num_rows($check_columns) == 0) {
-                    // Add order-related columns to customers table
-                    mysqli_query($conn, "ALTER TABLE customers 
-                                        ADD COLUMN last_order_number VARCHAR(50),
-                                        ADD COLUMN last_order_amount DECIMAL(10,2) DEFAULT 0,
-                                        ADD COLUMN last_order_date TIMESTAMP NULL,
-                                        ADD COLUMN total_orders INT DEFAULT 0,
-                                        ADD COLUMN total_spent DECIMAL(10,2) DEFAULT 0");
-                }
-                
-                $customer_sql = "INSERT INTO customers 
-                                (first_name, last_name, email, phone, address, city, state, country, zip_code,
-                                 last_order_number, last_order_amount, last_order_date, total_orders, total_spent)
-                                VALUES 
-                                ('$first_name', '$last_name', '$email', '$phone', '$address', '$city', '$state', '$country', '$zip_code',
-                                 '$order_number', '$total', NOW(), 1, $total)";
-            }
-            
-            if (!mysqli_query($conn, $customer_sql)) {
-                throw new Exception("Failed to save customer order: " . mysqli_error($conn));
-            }
-            
-            $customer_id = mysqli_insert_id($conn) ?: $customer_id;
 
-            /* ---------- STORE ORDER DETAILS IN SESSION FOR EMAIL ---------- */
-            $_SESSION['last_order'] = [
-                'order_number' => $order_number,
-                'customer_name' => $customer_name,
-                'email' => $email,
-                'phone' => $phone,
-                'address' => $address,
-                'city' => $city,
-                'state' => $state,
-                'country' => $country,
-                'zip_code' => $zip_code,
-                'items' => $items,
-                'total' => $total
-            ];
+        /* ===== ORDER NUMBER ===== */
+        $order_number = 'ORD-' . date('Ymd') . '-' . rand(1000,9999);
 
-            /* ---------- SEND EMAIL ---------- */
-            $mail = new PHPMailer(true);
+        /* ===== SAVE ORDER ===== */
+        $stmt = $conn->prepare("
+            INSERT INTO orders
+            (first_name,last_name,email,phone,address,city,state,country,zip_code,
+             order_number,total_amount,total_orders,total_spent)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,1,?)
+        ");
 
+        $stmt->bind_param(
+            "ssssssssssdd",
+            $first_name,
+            $last_name,
+            $email,
+            $phone,
+            $address,
+            $city,
+            $state,
+            $country,
+            $zip_code,
+            $order_number,
+            $total,
+            $total
+        );
+
+        if (!$stmt->execute()) {
+            $errors[] = "Order save failed";
+        } else {
+
+            /* ===== SEND EMAIL ===== */
             try {
+                $mail = new PHPMailer(true);
                 $mail->isSMTP();
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
@@ -140,55 +93,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->Port       = 587;
 
                 $mail->setFrom('irsaraazaq5@gmail.com', 'Cartify');
-                $mail->addAddress($email, $customer_name);
+                $mail->addAddress($email, $first_name . ' ' . $last_name);
 
-                $mail->Subject = "Order Confirmation #$order_number - Cartify";
+                $mail->Subject = "Order Confirmation - $order_number";
 
-                $body = "Hi $first_name,\n\n";
-                $body .= "Thank you for your order! Your order has been confirmed.\n\n";
-                $body .= "Order Number: $order_number\n";
-                $body .= "Order Date: " . date('F j, Y') . "\n\n";
-                $body .= "Order Details:\n";
-                $body .= "================================\n";
+                $body  = "Hi $first_name,\n\n";
+                $body .= "Your order has been confirmed.\n\n";
+                $body .= "Order Number: $order_number\n\n";
                 foreach ($items as $i) {
-                    $body .= $i['name'] . " x " . $i['qty'] . " = Rs " . number_format($i['qty'] * $i['price'], 2) . "\n";
+                    $body .= $i['name'] . " x " . $i['qty'] . " = Rs " . ($i['qty'] * $i['price']) . "\n";
                 }
-                $body .= "================================\n";
-                $body .= "Total: Rs " . number_format($total, 2) . "\n\n";
-                
-                $body .= "Shipping Address:\n";
-                $body .= "$customer_name\n";
-                $body .= "$address\n";
-                $body .= "$city, $state $zip_code\n";
-                $body .= "$country\n\n";
-                
-                $body .= "Thank you for shopping with Cartify!\n";
-                $body .= "We'll notify you once your order is shipped.\n\n";
-                $body .= "Best regards,\n";
-                $body .= "Cartify Team";
+                $body .= "\nTotal: Rs $total\n\n";
+                $body .= "Thank you for shopping with Cartify!";
 
                 $mail->Body = $body;
                 $mail->send();
 
-                $success = "✅ Order confirmed! Your order number is: <strong>$order_number</strong><br>";
-                $success .= "A confirmation email has been sent to <strong>$email</strong>";
+                $success = "✅ Order placed successfully!<br>
+                            Order Number: <b>$order_number</b><br>
+                            Confirmation email sent to <b>$email</b>";
 
-                // Clear cart session
                 unset($_SESSION['cart'], $_SESSION['buy_now']);
 
             } catch (Exception $e) {
-                $errors[] = "Email sending failed: " . $e->getMessage();
-                // Still show success since order was saved
-                $success = "✅ Order confirmed! Your order number is: <strong>$order_number</strong><br>";
-                $success .= "Note: Email could not be sent, but your order is saved.";
+                $success = "✅ Order placed successfully!<br>
+                            Order Number: <b>$order_number</b><br>
+                            (Email could not be sent)";
             }
-
-        } catch (Exception $e) {
-            $errors[] = "Order processing failed: " . $e->getMessage();
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
